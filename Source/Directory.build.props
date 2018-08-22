@@ -14,7 +14,7 @@
     <Company>Alexandre Mutel</Company>
     <Copyright>Copyright (c) 2010-2016 Alexandre Mutel</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>4.1.0</Version>
+    <Version>4.2.0</Version>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <Version Condition=" '$(SharpDXPackagingDev)' == 'true' ">$(Version)-ci$(SharpDXBuildNumber)</Version>
     <PackageOutputPath>$(MSBuildThisFileDirectory)/../bin</PackageOutputPath>
@@ -32,6 +32,15 @@
     <SharpGenGeneratedCodeFolder Condition="'$(TargetFramework)' == 'net40'">Generated/net40_$(AppType)</SharpGenGeneratedCodeFolder>
     <SharpGenDocumentationOutputDir>$(MSBuildThisFileDirectory)</SharpGenDocumentationOutputDir>
     <SharpGenGenerateConsumerBindMapping>false</SharpGenGenerateConsumerBindMapping>
+
+    <!--Output all assemblies into the same folder for the samples and to avoid copying assembly references all around for each project-->
+    <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+    <OutputPath>$(MSBuildThisFileDirectory)..\Bin\$(Configuration)\</OutputPath>
+    <DocumentationFile Condition="'$(Configuration)' == 'Release'">$(MSBuildThisFileDirectory)..\Bin\$(Configuration)\$(TargetFramework)\$(PackageId).xml</DocumentationFile>
+
+    <!-- Enable sourcelink support -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' And Exists('$(MSBuildThisFileDirectory)/../sharpdx.snk')">
     <DefineConstants>$(DefineConstants);SHARPDX_SIGNED</DefineConstants>
@@ -40,26 +49,13 @@
     <DelaySign>true</DelaySign>
   </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
-  </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="SharpGenTools.Sdk" Version="1.0.0" PrivateAssets="All" />
-    <PackageReference Include="SharpGen.Doc.Msdn.Tasks" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="SharpGenTools.Sdk" Version="1.1.1-ci466" PrivateAssets="All" />
+    <PackageReference Include="SharpGen.Doc.Msdn.Tasks" Version="1.1.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-*" PrivateAssets="All"/>
     <SharpGenGlobalNamespaceOverrides Include="InterfaceArray" Override="ComArray" />
     <SharpGenGlobalNamespaceOverrides Include="MemoryHelpers"  Override="Utilities" />
     <SharpGenGlobalNamespaceOverrides Include="BooleanHelpers" Override="Utilities" />
     <SharpGenGlobalNamespaceOverrides Include="StringHelpers"  Override="Utilities" />
-  </ItemGroup>
-
-  
-  <!-- Special packages and imports for UWP support -->
-  <ItemGroup>
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.1.0" PrivateAssets="all" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform " Version="5.4.0" />
   </ItemGroup>
 </Project>

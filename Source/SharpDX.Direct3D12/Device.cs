@@ -402,7 +402,7 @@ namespace SharpDX.Direct3D12
                     {
                         for (int i = 0; i < elements.Length; i++)
                         {
-                            nativeElements[i].__MarshalFree();
+                            elements[i].__MarshalFree(ref nativeElements[i]);
                         }
                     }
 
@@ -410,7 +410,7 @@ namespace SharpDX.Direct3D12
                     {
                         for (int i = 0; i < streamOutElements.Length; i++)
                         {
-                            nativeStreamOutElements[i].__MarshalFree();
+                            streamOutElements[i].__MarshalFree(ref nativeStreamOutElements[i]);
                         }
                     }
                 }
@@ -561,6 +561,26 @@ namespace SharpDX.Direct3D12
             {
                 FeatureDataArchitecture options = new FeatureDataArchitecture();
                 this.CheckFeatureSupport(Feature.Architecture, new IntPtr(&options), Utilities.SizeOf<FeatureDataArchitecture>());
+                return options;
+            }
+        }
+
+        public unsafe FeatureDataGpuVirtualAddressSupport GpuVirtualAddressSupport
+        {
+            get
+            {
+                FeatureDataGpuVirtualAddressSupport options = new FeatureDataGpuVirtualAddressSupport();
+                this.CheckFeatureSupport(Feature.GpuVirtualAddressSupport, new IntPtr(&options), Utilities.SizeOf<FeatureDataGpuVirtualAddressSupport>());
+                return options;
+            }
+        }
+
+        public unsafe FeatureDataShaderModel ShaderModel
+        {
+            get
+            {
+                FeatureDataShaderModel options = new FeatureDataShaderModel();
+                this.CheckFeatureSupport(Feature.ShaderModel, new IntPtr(&options), Utilities.SizeOf<FeatureDataShaderModel>());
                 return options;
             }
         }

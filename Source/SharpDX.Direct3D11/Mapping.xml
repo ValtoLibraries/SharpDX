@@ -73,9 +73,13 @@
     <const from-macro="D3D11_REQ_TEXTURECUBE_DIMENSION" class="SharpDX.Direct3D11.Resource" type="int" name="MaximumTextureCubeSize" />
 
     <create class="ResultCode" visibility="public static" />
+    <context>winerror</context>
     <const from-macro="D3D11_ERROR_(.*)" type="SharpDX.ResultDescriptor" cpp-type="int" name="$1" class="SharpDX.Direct3D11.ResultCode" visibility="public static readonly">new SharpDX.ResultDescriptor($1, "$3", "$0", "$2")</const>
     <const from-macro="D3DX11_ERR_(.*)" type="SharpDX.ResultDescriptor" cpp-type="int" name="$1" class="SharpDX.Direct3D11.ResultCode" visibility="public static readonly">new SharpDX.ResultDescriptor($1, "$3", "$0", "$2")</const>
-
+    <context-clear />
+    
+    <context id="d3d11-all"/>
+    
     <create class="CommonShaderStage" visibility="public abstract partial" />
     <const from-macro="D3D11_COMMONSHADER_(.*)" class="SharpDX.Direct3D11.CommonShaderStage" type="int" name="$1" />
     <const from-macro="D3D11_IA_(.*)" class="SharpDX.Direct3D11.InputAssemblerStage" type="int" name="$1" />
@@ -88,6 +92,7 @@
     <const from-macro="D3D11_PS_CS_UAV_REGISTER_COUNT" class="SharpDX.Direct3D11.ComputeShaderStage" type="int" name="UnorderedAccessViewSlotCount" />
     <const from-macro="D3D11_CS_([^0-9].*)" class="SharpDX.Direct3D11.ComputeShaderStage" type="int" name="$1" />
 
+    <const from-macro="D3D11_PS_(PIXEL_CENTER_FRACTIONAL_COMPONENT)" class="SharpDX.Direct3D11.PixelShaderStage" type="float" name="$1" />
     <const from-macro="D3D11_PS_([^C][^S].*)" class="SharpDX.Direct3D11.PixelShaderStage" type="int" name="$1" />
 
     <const from-macro="D3D11_(SIMULTANEOUS_RENDER_TARGET_COUNT)" class="SharpDX.Direct3D11.OutputMergerStage" type="int" name="$1" />
@@ -299,11 +304,11 @@
 
     <map param="ID3D11Device4::RegisterDeviceRemovedEvent::pdwCookie" return="true" />
 
-     <map method="ID3D11Device5::OpenSharedFence" visibility="internal" />
+    <map method="ID3D11Device5::OpenSharedFence" visibility="internal" />
 
-     <map method="ID3D11Device5::CreateFence" visibility="internal" />
-     <map param="ID3D11Device5::CreateFence::ppFence" type="ID3D11Fence" attribute="out fast"/>
-     <map param="ID3D11Fence::CreateSharedHandle::pHandle" return="true" />
+    <map method="ID3D11Device5::CreateFence" visibility="internal" />
+    <map param="ID3D11Device5::CreateFence::ppFence" type="ID3D11Fence" attribute="out fast"/>
+    <map param="ID3D11Fence::CreateSharedHandle::pHandle" return="true" />
 
     <!--
     // *****************************************************************
@@ -321,6 +326,7 @@
     <map param="D3D11On12CreateDevice::ppDevice" type="ID3D11Device" attribute="out" />
     
     <remove function="ID3D11DeviceContext1_.*"/>
+    <remove method="ID3D11CommandList::GetContextFlags" />
 
     <context-clear />
   </mapping>
