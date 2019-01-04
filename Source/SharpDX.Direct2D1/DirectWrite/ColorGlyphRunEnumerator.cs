@@ -7,12 +7,15 @@ namespace SharpDX.DirectWrite
 {
     public partial class ColorGlyphRunEnumerator
     {
-        public unsafe ColorGlyphRun GetCurrent()
+        public unsafe ColorGlyphRun CurrentRun
         {
-            GetCurrentRun(out IntPtr ptr);
-            var run = new ColorGlyphRun();
-            run.__MarshalFrom(ref *((ColorGlyphRun.__Native*)ptr));
-            return run;
+            get
+            {
+                GetCurrentRun(out IntPtr ptr);
+                var run = new ColorGlyphRun();
+                run.__MarshalFrom(ref *((ColorGlyphRun.__Native*)ptr));
+                return run;
+            }
         }
     }
 }

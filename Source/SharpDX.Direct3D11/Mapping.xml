@@ -171,7 +171,8 @@
 
     <map enum-item="D3D11_(MESSAGE_ID.*)" name-tmp="$1" />
     <map enum-item="D3D12_(MESSAGE_ID.*)" name-tmp="$1" />
-
+    <map enum-item="D3D11_SHARED_RESOURCE_TIER_(.*)" name="Tier$1"/>
+    
     <!--
     // *****************************************************************
     // D3D11 Struct
@@ -187,7 +188,7 @@
     <map struct="D3D11_FEATURE_DATA_.*" visibility="internal" />
     
     <map struct="D3D11_FEATURE_DATA_D3D11_OPTIONS" visibility="public" />
-    <map struct="D3D11_FEATURE_DATA_D3D11_OPTIONS[1234]" visibility="public" />
+    <map struct="D3D11_FEATURE_DATA_D3D11_OPTIONS[12345]" visibility="public" />
     <map struct="D3D11_FEATURE_DATA_SHADER_MIN_PRECISION_SUPPORT" visibility="public" />
 
     <map field="D3DX11_IMAGE_INFO::pSrcInfo" visibility="internal" />
